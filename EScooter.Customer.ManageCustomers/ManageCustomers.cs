@@ -37,7 +37,7 @@ namespace EScooter.Customer.ManageCustomers
         }
 
         [Function("remove-customer")]
-        public static async void RemoveCustomer([ServiceBusTrigger("%TopicName%", "%AddSubscription%", Connection = "ServiceBusConnectionString")] string mySbMsg, FunctionContext context)
+        public static async void RemoveCustomer([ServiceBusTrigger("%TopicName%", "%RemoveSubscription%", Connection = "ServiceBusConnectionString")] string mySbMsg, FunctionContext context)
         {
             var logger = context.GetLogger("remove-customer");
             string digitalTwinUrl = "https://" + Environment.GetEnvironmentVariable("AzureDTHostname");
