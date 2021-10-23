@@ -2,8 +2,8 @@ name: Continuous Integration
 
 env:
   OUTPUT_DIR: publish
-  RELEASE_PREFIX: Azure Function Template
-  AZURE_FUNCTIONAPP_NAME: ''
+  RELEASE_PREFIX: Manage Customers
+  AZURE_FUNCTIONAPP_NAME: 'customer-manage-customers'
 
 on:
   workflow_dispatch:
