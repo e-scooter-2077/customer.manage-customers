@@ -24,16 +24,8 @@ namespace EScooter.Customer.ManageCustomers
             var digitalTwinsClient = new DigitalTwinsClient(new Uri(digitalTwinUrl), credential);
 
             var message = JsonConvert.DeserializeObject<CustomerCreated>(mySbMsg);
-
-            try
-            {
-                await DTUtils.AddDigitalTwin(message.Id, digitalTwinsClient);
-                logger.LogInformation($"Add customer: {mySbMsg}");
-            }
-            catch (RequestFailedException e)
-            {
-                logger.LogError($"Create twin error: {e.Status}: {e.Message}");
-            }
+            await DTUtils.AddDigitalTwin(message.Id, digitalTwinsClient);
+            logger.LogInformation($"Add customer: {mySbMsg}");
         }
 
         [Function("remove-customer")]
@@ -45,16 +37,8 @@ namespace EScooter.Customer.ManageCustomers
             var digitalTwinsClient = new DigitalTwinsClient(new Uri(digitalTwinUrl), credential);
 
             var message = JsonConvert.DeserializeObject<CustomerDeleted>(mySbMsg);
-
-            try
-            {
-                await DTUtils.AddDigitalTwin(message.Id, digitalTwinsClient);
-                logger.LogInformation($"Removed customer: {mySbMsg}");
-            }
-            catch (RequestFailedException e)
-            {
-                logger.LogError($"Remove twin error: {e.Status}: {e.Message}");
-            }
+            await DTUtils.AddDigitalTwin(message.Id, digitalTwinsClient);
+            logger.LogInformation($"Removed customer: {mySbMsg}");
         }
 
         internal static class DTUtils
