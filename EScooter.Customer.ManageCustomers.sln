@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31624.102
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2ED3BF1B-C43D-4822-B4CF-32B8EE3FA4E9}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EScooter.Customer.ManageCustomers", "EScooter.Customer.ManageCustomers\EScooter.Customer.ManageCustomers.csproj", "{6D72F64A-D80B-4871-880B-FA83555497DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EScooter.Customer.ManageCustomers.UnitTests", "test\EScooter.Customer.ManageCustomers.UnitTests\EScooter.Customer.ManageCustomers.UnitTests.csproj", "{6F7B5E5E-8300-44E7-AB13-4B545BCEC4A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{6D72F64A-D80B-4871-880B-FA83555497DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D72F64A-D80B-4871-880B-FA83555497DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D72F64A-D80B-4871-880B-FA83555497DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F7B5E5E-8300-44E7-AB13-4B545BCEC4A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F7B5E5E-8300-44E7-AB13-4B545BCEC4A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F7B5E5E-8300-44E7-AB13-4B545BCEC4A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F7B5E5E-8300-44E7-AB13-4B545BCEC4A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
