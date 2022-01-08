@@ -4,6 +4,7 @@ env:
   OUTPUT_DIR: publish
   RELEASE_PREFIX: Manage Customers
   AZURE_FUNCTIONAPP_NAME: 'customer-manage-customers'
+  PROJECT_NAME: 'EScooter.Customer.ManageCustomers'
 
 on:
   workflow_dispatch:
@@ -44,6 +45,7 @@ jobs:
         uses: EasyDesk/action-dotnet-publish@v1
         with:
           output-dir: ${{ env.OUTPUT_DIR }}
+          path: ${{ env.PROJECT_NAME }}
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
