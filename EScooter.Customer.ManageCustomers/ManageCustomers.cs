@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using Azure;
 using Azure.DigitalTwins.Core;
 using Azure.Identity;
@@ -13,7 +12,7 @@ namespace EScooter.Customer.ManageCustomers
 
     public record CustomerDeleted(Guid Id);
 
-    public static class ManageCustomers
+    public static partial class ManageCustomers
     {
         [Function("add-customer")]
         public static async void AddCustomer([ServiceBusTrigger("%TopicName%", "%AddSubscription%", Connection = "ServiceBusConnectionString")] string mySbMsg, FunctionContext context)
@@ -47,28 +46,12 @@ namespace EScooter.Customer.ManageCustomers
 
             try
             {
-                await DTUtils.AddDigitalTwin(message.Id, digitalTwinsClient);
+                await DTUtils.RemoveDigitalTwin(message.Id, digitalTwinsClient);
                 logger.LogInformation($"Removed customer: {mySbMsg}");
             }
             catch (RequestFailedException e)
             {
                 logger.LogInformation($"Function failed to remove customer {e.ErrorCode}");
-            }
-        }
-
-        internal static class DTUtils
-        {
-            public static async Task AddDigitalTwin(Guid id, DigitalTwinsClient digitalTwinsClient)
-            {
-                var twinData = new BasicDigitalTwin();
-                twinData.Id = id.ToString();
-                twinData.Metadata.ModelId = "dtmi:com:escooter:Customer;1";
-                await digitalTwinsClient.CreateOrReplaceDigitalTwinAsync(twinData.Id, twinData);
-            }
-
-            public static async Task RemoveDigitalTwin(Guid id, DigitalTwinsClient digitalTwinsClient)
-            {
-                await digitalTwinsClient.DeleteDigitalTwinAsync(id.ToString());
             }
         }
     }
