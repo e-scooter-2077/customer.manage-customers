@@ -1,5 +1,7 @@
 using System;
+using System.Net.Http;
 using Azure;
+using Azure.Core.Pipeline;
 using Azure.DigitalTwins.Core;
 using Azure.Identity;
 using Microsoft.Azure.Functions.Worker;
@@ -12,15 +14,25 @@ namespace EScooter.Customer.ManageCustomers
 
     public record CustomerDeleted(Guid Id);
 
-    public static partial class ManageCustomers
+    public static class ManageCustomers
     {
+        private static readonly HttpClient _httpClient = new HttpClient();
+        private static string _digitalTwinUrl = "https://" + Environment.GetEnvironmentVariable("AzureDTHostname");
+
+        private static DigitalTwinsClient InstantiateDtClient()
+        {
+            var credential = new DefaultAzureCredential();
+            return new DigitalTwinsClient(
+                        new Uri(_digitalTwinUrl),
+                        credential,
+                        new DigitalTwinsClientOptions { Transport = new HttpClientTransport(_httpClient) });
+        }
+
         [Function("add-customer")]
         public static async void AddCustomer([ServiceBusTrigger("%TopicName%", "%AddSubscription%", Connection = "ServiceBusConnectionString")] string mySbMsg, FunctionContext context)
         {
             var logger = context.GetLogger("add-customer");
-            string digitalTwinUrl = "https://" + Environment.GetEnvironmentVariable("AzureDTHostname");
-            var credential = new DefaultAzureCredential();
-            var digitalTwinsClient = new DigitalTwinsClient(new Uri(digitalTwinUrl), credential);
+            var digitalTwinsClient = InstantiateDtClient();
 
             var message = JsonConvert.DeserializeObject<CustomerCreated>(mySbMsg);
             try
@@ -38,9 +50,7 @@ namespace EScooter.Customer.ManageCustomers
         public static async void RemoveCustomer([ServiceBusTrigger("%TopicName%", "%RemoveSubscription%", Connection = "ServiceBusConnectionString")] string mySbMsg, FunctionContext context)
         {
             var logger = context.GetLogger("remove-customer");
-            string digitalTwinUrl = "https://" + Environment.GetEnvironmentVariable("AzureDTHostname");
-            var credential = new DefaultAzureCredential();
-            var digitalTwinsClient = new DigitalTwinsClient(new Uri(digitalTwinUrl), credential);
+            var digitalTwinsClient = InstantiateDtClient();
 
             var message = JsonConvert.DeserializeObject<CustomerDeleted>(mySbMsg);
 
